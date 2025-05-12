@@ -4,14 +4,17 @@
 
 # Virtual environment
 .venv/
+venv/
 
 # Python cache files
 __pycache__/
 *.py[cod]
 *$py.class
-
-# VS Code settings
-.vscode/
+*.so
+.Python
+venv/
+ENV/
+.env
 
 # Environment files
 .env
@@ -20,3 +23,16 @@ __pycache__/
 dist/
 build/
 *.egg-info/
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Local Supabase CLI data
+**/supabase/.temp/
