@@ -4,23 +4,23 @@ import requests
 from base64 import b64encode
 
 class JiraTicketGenerator:
-    def __init__(self, jira_url, email, api_token, project_key):
+    def __init__(self, jira_url, email, jira_api_key, jira_project_key):
         """
         Initialize the JIRA ticket generator
         
         Args:
             jira_url: Your JIRA instance URL (e.g., 'https://your-domain.atlassian.net')
             email: Your JIRA account email
-            api_token: Your JIRA API token
-            project_key: The key of your JIRA project
+            jira_api_key: Your JIRA API token
+            jira_project_key: The key of your JIRA project
         """
         self.jira_url = jira_url
-        self.project_key = project_key
-        self.auth_header = self._create_auth_header(email, api_token)
+        self.jira_project_key = jira_project_key
+        self.auth_header = self._create_auth_header(email, jira_api_key)
         
-    def _create_auth_header(self, email, api_token):
+    def _create_auth_header(self, email, jira_api_key):
         """Create the authentication header for JIRA API requests"""
-        auth_str = f"{email}:{api_token}"
+        auth_str = f"{email}:{jira_api_key}"
         auth_bytes = auth_str.encode("utf-8")
         auth_b64 = b64encode(auth_bytes).decode("utf-8")
         return {"Authorization": f"Basic {auth_b64}"}
@@ -47,7 +47,7 @@ class JiraTicketGenerator:
         # You'll need to replace 'customfield_10011' with your actual Epic Name field ID
         payload = {
             "fields": {
-                "project": {"key": self.project_key},
+                "project": {"key": self.jira_project_key},
                 "summary": epic_summary,
                 "description": epic_description,
                 "issuetype": {"name": "Epic"},
@@ -96,7 +96,7 @@ class JiraTicketGenerator:
         # You'll need to replace 'customfield_10014' with your actual Epic Link field ID
         payload = {
             "fields": {
-                "project": {"key": self.project_key},
+                "project": {"key": self.jira_project_key},
                 "summary": story_summary,
                 "description": story_description,
                 "issuetype": {"name": "Story"},
@@ -144,7 +144,7 @@ class JiraTicketGenerator:
         
         payload = {
             "fields": {
-                "project": {"key": self.project_key},
+                "project": {"key": self.jira_project_key},
                 "summary": subtask_summary,
                 "description": subtask_description,
                 "issuetype": {"name": "Sub-task"},
@@ -168,10 +168,10 @@ def generate_project_tickets():
     # Replace these with your actual JIRA credentials and project information
     jira_url = "https://your-domain.atlassian.net"
     email = "your-email@example.com"
-    api_token = "your-api-token"
-    project_key = "APA"  # AI Personal Assistant
+    jira_api_key = "your-api-token"
+    jira_project_key = "APA"  # AI Personal Assistant
     
-    jira = JiraTicketGenerator(jira_url, email, api_token, project_key)
+    jira = JiraTicketGenerator(jira_url, email, jira_api_key, jira_project_key)
     
     # Dictionary to store epic keys for reference
     epic_keys = {}
